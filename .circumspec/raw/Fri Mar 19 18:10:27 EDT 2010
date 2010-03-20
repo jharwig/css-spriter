@@ -1,0 +1,1 @@
+{:failure 1, :name "get images", :context (css-sprite.core-test), :story [], :locals {get-images-test #<core_test$eval__2232$get_images_test__2233 css_sprite.core_test$eval__2232$get_images_test__2233@56de8a94>}, :expected (> (count (get-images tango-dir)) 0), :actual (not (> 0 0))}

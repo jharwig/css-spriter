@@ -1,0 +1,3 @@
+{:nsec 231610000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:nsec 231003000, :success 1, :story [], :context (css-sprite.core-test), :name "positions"}
+{:throwable #<ClassCastException java.lang.ClassCastException: clojure.lang.LazySeq cannot be cast to java.lang.Number>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

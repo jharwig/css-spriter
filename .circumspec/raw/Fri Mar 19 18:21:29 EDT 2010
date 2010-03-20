@@ -1,0 +1,2 @@
+{:nsec 298201000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.IllegalArgumentException: Wrong number of args passed to: core-test$eval--2595$adsf--2596$fn>, :error 1, :story [], :context (css-sprite.core-test), :name "adsf"}

@@ -1,0 +1,2 @@
+{:nsec 51000, :success 1, :story [], :context (css-sprite.core-test), :name "core"}
+{:throwable #<IllegalArgumentException java.lang.IllegalArgumentException: Key must be integer>, :error 1, :story [], :context (css-sprite.core-test), :name "get images"}

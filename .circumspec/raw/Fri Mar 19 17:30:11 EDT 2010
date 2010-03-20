@@ -1,0 +1,2 @@
+{:nsec 46000, :success 1, :story [], :context (css-sprite.core-test), :name "core"}
+{:nsec 517000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}

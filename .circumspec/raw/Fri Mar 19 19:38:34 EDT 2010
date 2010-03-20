@@ -1,0 +1,2 @@
+{:nsec 248433000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:throwable #<IllegalArgumentException java.lang.IllegalArgumentException: No matching method found: drawImage for class sun.java2d.SunGraphics2D>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

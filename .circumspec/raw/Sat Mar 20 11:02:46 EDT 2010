@@ -1,0 +1,3 @@
+{:nsec 229306000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:nsec 238747000, :success 1, :story [], :context (css-sprite.core-test), :name "positions"}
+{:throwable #<ClassCastException java.lang.ClassCastException: java.lang.Class cannot be cast to clojure.lang.IFn>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

@@ -1,0 +1,3 @@
+{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.ClassCastException: java.lang.Character cannot be cast to java.lang.String>, :error 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.RuntimeException: java.lang.ClassCastException: java.lang.Character cannot be cast to java.lang.String>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}
+{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.RuntimeException: java.lang.ClassCastException: java.lang.Character cannot be cast to java.lang.String>, :error 1, :story [], :context (css-sprite.core-test), :name "vertical layout"}

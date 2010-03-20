@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/jharwig/Documents/Code/workspace/work/eclipse/css-sprite/clojure.jar" sourcepath="/Users/jharwig/Documents/Code/workspace/work/eclipse/css-sprite/clojure-src.jar"/>
+	<classpathentry kind="lib" path="/Users/jharwig/Documents/Code/workspace/work/eclipse/css-sprite/clojure-contrib.jar" sourcepath="/Users/jharwig/Documents/Code/workspace/work/eclipse/css-sprite/clojure-contrib-src.jar"/>
+	<classpathentry kind="lib" path="/Users/jharwig/Documents/Code/workspace/work/eclipse/css-sprite/classes"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

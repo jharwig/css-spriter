@@ -1,0 +1,3 @@
+{:nsec 5699000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:throwable #<IllegalArgumentException java.lang.IllegalArgumentException: Wrong number of args passed to: PersistentVector>, :error 1, :story [], :context (css-sprite.core-test), :name "positions"}
+{:throwable #<IllegalArgumentException java.lang.IllegalArgumentException: Wrong number of args passed to: PersistentVector>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

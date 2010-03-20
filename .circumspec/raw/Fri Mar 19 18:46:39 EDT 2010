@@ -1,0 +1,2 @@
+{:nsec 327107000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:throwable #<IllegalArgumentException java.lang.IllegalArgumentException: No matching field found: setColor for class java.awt.Color>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

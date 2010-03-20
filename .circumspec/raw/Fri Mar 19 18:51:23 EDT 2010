@@ -1,0 +1,2 @@
+{:nsec 248437000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:throwable #<NullPointerException java.lang.NullPointerException>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

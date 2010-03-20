@@ -1,0 +1,4 @@
+{:nsec 317290000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:nsec 1758973000, :success 1, :story [], :context (css-sprite.core-test), :name "combine"}
+{:nsec 339854000, :success 1, :story [], :context (css-sprite.core-test), :name "vertical layout"}
+{:nsec 2174000, :success 1, :story [], :context (css-sprite.core-test), :name "write css"}

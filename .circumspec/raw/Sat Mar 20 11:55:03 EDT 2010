@@ -1,0 +1,3 @@
+{:nsec 243034000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
+{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.ClassCastException: clojure.lang.Cons cannot be cast to clojure.lang.IFn>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}
+{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.ClassCastException: clojure.lang.Cons cannot be cast to clojure.lang.IFn>, :error 1, :story [], :context (css-sprite.core-test), :name "vertical layout"}
