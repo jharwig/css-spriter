@@ -58,7 +58,7 @@
 			(map 
 				(fn [file]
 					(let [bi (ImageIO/read file)]
-						{:buffered-image bi :path (.getPath file) :dimensions [(.getWidth bi) (.getHeight bi)]}))
+						{:buffered-image bi :path (.replaceAll (.getPath file) dir "") :dimensions [(.getWidth bi) (.getHeight bi)]}))
 				(filter 
 					#(re-matches #".*\.png$" (.getName %1)) 
 					(file-seq d))))))
@@ -79,7 +79,7 @@
 
 (defn image->class-name
 	[image]
-	(:path image))
+	(.replaceAll (:path image) (java.io.File/separator) "_"))
 
 (defprotocol CssWriter
   (write-css-selector [c image]))
@@ -112,11 +112,15 @@
 				(write-css-selector css-writer image)))))))
 				
 (defn gen-sprite
-	[images-dir output-png output-css]
-	(write-css
-		(combine-images (get-images images-dir) :vertical output-png)
-		:vertical
-		output-css))
+	[images-dir & options]
+	(let [defaults {:png "sprite.png" 
+	                :css "sprite.css"
+	                :layout :vertical}
+				opts (apply assoc defaults (or options {}))]
+		(write-css
+			(combine-images (get-images images-dir) (:layout opts) (:png opts))
+			(:layout opts)
+			(:css opts))))
 			
 			
 			

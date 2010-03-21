@@ -3,7 +3,6 @@
   (:use [circumspec]))
 
 (def tango-dir "test/resources/tango-icon-theme")
-
 	
 (testing "get images"
 	(should (> (count (get-images tango-dir)) 0)))
@@ -15,5 +14,5 @@
 		(should (= (count coord-images) (count images)))))
 			
 (testing "gen sprite"
-	(gen-sprite tango-dir "~/Desktop/sprite.png" "~/Desktop/sprite.css"))
+	(gen-sprite tango-dir :png "~/Desktop/sprite.png" :css "~/Desktop/sprite.css"))
 	
