@@ -6,3 +6,4 @@ bin
 .circumspec
 .classpath
 .project
+.DS_Store
