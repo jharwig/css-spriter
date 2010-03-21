@@ -1,2 +1,0 @@
-{:nsec 34000, :success 1, :story [], :context (css-sprite.core-test), :name "core"}
-{:failure 1, :name "get images", :context (css-sprite.core-test), :story [], :locals {get-images-test #<core_test$eval__1501$get_images_test__1502 css_sprite.core_test$eval__1501$get_images_test__1502@5f8f127c>}, :expected (> 0 (count (get-images "test/resources/tango-icon-theme"))), :actual (not (> 0 28))}

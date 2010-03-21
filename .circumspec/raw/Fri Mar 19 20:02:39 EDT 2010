@@ -1,3 +1,0 @@
-{:nsec 250944000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
-{:nsec 266853000, :success 1, :story [], :context (css-sprite.core-test), :name "combine"}
-{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.IllegalArgumentException: Wrong number of args passed to: core$positions--5075$fn>, :error 1, :story [], :context (css-sprite.core-test), :name "positions"}

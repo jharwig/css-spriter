@@ -1,3 +1,0 @@
-{:nsec 227597000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
-{:nsec 242343000, :success 1, :story [], :context (css-sprite.core-test), :name "positions"}
-{:throwable #<ClassCastException java.lang.ClassCastException: clojure.lang.PersistentList cannot be cast to java.lang.Number>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

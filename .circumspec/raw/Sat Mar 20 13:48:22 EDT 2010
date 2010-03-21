@@ -1,4 +1,0 @@
-{:nsec 234435000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
-{:nsec 1711617000, :success 1, :story [], :context (css-sprite.core-test), :name "combine"}
-{:nsec 331074000, :success 1, :story [], :context (css-sprite.core-test), :name "vertical layout"}
-{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.IllegalArgumentException: Wrong number of args passed to: core$write-css-string>, :error 1, :story [], :context (css-sprite.core-test), :name "write css"}

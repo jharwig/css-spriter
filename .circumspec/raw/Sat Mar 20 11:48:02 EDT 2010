@@ -1,2 +1,0 @@
-{:nsec 262463000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
-{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.IllegalArgumentException: Wrong number of args passed to: Vertical--14253$fn>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

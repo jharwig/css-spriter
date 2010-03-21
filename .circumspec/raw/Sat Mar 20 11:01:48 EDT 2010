@@ -1,3 +1,0 @@
-{:nsec 229525000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
-{:nsec 247716000, :success 1, :story [], :context (css-sprite.core-test), :name "positions"}
-{:throwable #<IllegalArgumentException java.lang.IllegalArgumentException: No implementation of method: :sprite-dimensions of protocol: #'css-sprite.core/Layout found for class: clojure.lang.Keyword>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

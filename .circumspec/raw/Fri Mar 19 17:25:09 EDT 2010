@@ -1,2 +1,0 @@
-{:nsec 50000, :success 1, :story [], :context (css-sprite.core-test), :name "core"}
-{:failure 1, :name "get images", :context (css-sprite.core-test), :story [], :locals {get-images-test #<core_test$eval__1381$get_images_test__1382 css_sprite.core_test$eval__1381$get_images_test__1382@4ab4faeb>}, :expected (= 5 (count (get-images "test/resources/images"))), :actual (not (= 5 0))}

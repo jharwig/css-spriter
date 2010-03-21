@@ -1,3 +1,0 @@
-{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.IllegalArgumentException: No matching method found: read>, :error 1, :story [], :context (css-sprite.core-test), :name "get images"}
-{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.IllegalArgumentException: No matching method found: read>, :error 1, :story [], :context (css-sprite.core-test), :name "positions"}
-{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.IllegalArgumentException: No matching method found: read>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}

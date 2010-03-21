@@ -1,4 +1,0 @@
-{:nsec 239166000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
-{:nsec 1723823000, :success 1, :story [], :context (css-sprite.core-test), :name "combine"}
-{:nsec 321971000, :success 1, :story [], :context (css-sprite.core-test), :name "vertical layout"}
-{:throwable #<RuntimeException java.lang.RuntimeException: java.lang.ClassCastException>, :error 1, :story [], :context (css-sprite.core-test), :name "write css"}

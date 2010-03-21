@@ -3,3 +3,6 @@ pom.xml
 lib
 classes
 bin
+.circumspec
+.classpath
+.project

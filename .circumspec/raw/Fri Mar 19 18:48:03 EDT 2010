@@ -1,2 +1,0 @@
-{:nsec 248579000, :success 1, :story [], :context (css-sprite.core-test), :name "get images"}
-{:throwable #<IllegalArgumentException java.lang.IllegalArgumentException: No matching method found: fillRect for class java.lang.Integer>, :error 1, :story [], :context (css-sprite.core-test), :name "combine"}
