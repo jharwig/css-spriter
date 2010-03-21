@@ -1,4 +1,4 @@
-(defproject css-sprite "0.0.1"
+(defproject css-spriter "0.0.1"
   :description "Concat image files into single sprite and generate background-image css"
   :dependencies [
                  [org.clojure/clojure

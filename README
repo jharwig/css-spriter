@@ -1,15 +1,15 @@
 # css-sprite
 
-FIXME: write description
+Concat image files into single sprite and generate background-image css
 
 ## Usage
 
-FIXME: write
+Usage: java -cp clojure.jar clojure.main -e "(use 'css-spriter.core) (gen-sprite [dir])"
 
 ## Installation
 
-FIXME: write
+
 
 ## License
 
-FIXME: write
+Eclipse Public License 1.0
