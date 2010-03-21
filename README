@@ -1,13 +1,10 @@
-# css-sprite
+# css-spriter
 
 Concat image files into single sprite and generate background-image css
 
 ## Usage
 
 Usage: java -cp clojure.jar clojure.main -e "(use 'css-spriter.core) (gen-sprite [dir])"
-
-## Installation
-
 
 
 ## License
