@@ -6,9 +6,9 @@ Concat image files into single sprite and generate background-image css with Clo
 
 If you don't want to build, use this prebuilt [css-spriter-standalone.jar](http://github.com/downloads/jharwig/css-spriter/css-spriter-standalone.jar) and refer to the Usage section.
 
-### Installation
+### Building
 
-(requires leiningen (http://github.com/technomancy/leiningen)
+_requires [leiningen](http://github.com/technomancy/leiningen)_
 
     lein uberjar
 
