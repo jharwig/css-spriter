@@ -1,10 +1,11 @@
 (ns css-spriter.core
   (:require [clojure.contrib.seq-utils :as seq-utils]
-  					[clojure.contrib.duck-streams :as io])  
-	(:import (java.io File 
-										FilenameFilter)
-					 (javax.imageio ImageIO)
-					 (java.awt Color image.BufferedImage)))
+            [clojure.contrib.duck-streams :as io])  
+  (:import (java.io File 
+                    FilenameFilter)
+           (javax.imageio ImageIO)
+           (java.awt      Color 
+                          image.BufferedImage)))
   
 (defprotocol Layout
   (sprite-dimensions [l images])
@@ -15,113 +16,107 @@
   :as this
   Layout
   (sprite-dimensions [i]
-  	(let [images (with-coordinates this i)
-  		    max-width (apply max (map #((:dimensions %1) 0) images))
-  		    total-height (+ 
-  		    						 	((:coordinates (last images)) 1)
-  		    						 	((:dimensions (last images)) 1))]
-  		[max-width total-height]))
+      (let [images (with-coordinates this i)
+            max-width (apply max (map #((:dimensions %1) 0) images))
+            total-height (+ ((:coordinates (last images)) 1) ((:dimensions (last images)) 1))]
+        [max-width total-height]))
   (with-coordinates [images]
-  	(if (contains? (first images) :coordinates)
-  		images
-  		(let [heights (map #((:dimensions %1) 1) images)
-	  	      y-positions (conj heights 0)]
-				(for [[i image] (seq-utils/indexed images)]
-					(merge image {:coordinates [0 (reduce + (take (inc i) y-positions))]}))))))
+    (if (contains? (first images) :coordinates)
+      images
+      (let [heights (map #((:dimensions %1) 1) images)
+        y-positions (conj heights 0)]
+        (for [[i image] (seq-utils/indexed images)]
+          (merge image {:coordinates [0 (reduce + (take (inc i) y-positions))]}))))))
 
 (deftype Horizontal []
   :as this
   Layout
   (sprite-dimensions [i]
-  	(let [images (with-coordinates this i)
-  		    max-height (apply max (map #((:dimensions %1) 1) images))
-  		    total-width (+ 
-  		    						 	((:coordinates (last images)) 0)
-  		    						 	((:dimensions (last images)) 0))]
-  		[total-width max-height]))
+      (let [images (with-coordinates this i)
+              max-height (apply max (map #((:dimensions %1) 1) images))
+              total-width (+ ((:coordinates (last images)) 0) ((:dimensions (last images)) 0))]
+          [total-width max-height]))
   (with-coordinates [images]
-  	(if (contains? (first images) :coordinates)
-  		images
-  		(let [widths (map #((:dimensions %1) 0) images)
-	  	      x-positions (conj widths 0)]
-				(for [[i image] (seq-utils/indexed images)]
-					(merge image {:coordinates [(reduce + (take (inc i) x-positions)) 0]}))))))
+      (if (contains? (first images) :coordinates)
+          images
+          (let [widths (map #((:dimensions %1) 0) images)
+                x-positions (conj widths 0)]
+                (for [[i image] (seq-utils/indexed images)]
+                    (merge image {:coordinates [(reduce + (take (inc i) x-positions)) 0]}))))))
 
 (def layouts {:vertical (Vertical) :horizontal (Horizontal)})
-
-	  
+    
 (defn get-images 
-	"Given a directory, return a map of all png images with a buffered image and dimensions"
-	[dir]
-	(let [d (io/file-str dir)]
-		(when (.exists d)
-			(map 
-				(fn [file]
-					(let [bi (ImageIO/read file)]
-						{:buffered-image bi :path (.replaceAll (.getPath file) dir "") :dimensions [(.getWidth bi) (.getHeight bi)]}))
-				(filter 
-					#(re-matches #".*\.png$" (.getName %1)) 
-					(file-seq d))))))
-					
+    "Given a directory, return a map of all png images with a buffered image and dimensions"
+    [dir]
+    (let [d (io/file-str dir)]
+        (when (.exists d)
+            (map 
+                (fn [file]
+                    (let [bi (ImageIO/read file)]
+                        {:buffered-image bi :path (.replaceAll (.getPath file) dir "") :dimensions [(.getWidth bi) (.getHeight bi)]}))
+                (filter 
+                    #(re-matches #".*\.png$" (.getName %1)) 
+                    (file-seq d))))))
+                    
 (defn combine-images
-	"Given the images and a layout type, create a sprite png at the output location"
-	[images layout-type output]
-	(let [layout						(layout-type layouts)
-		    positioned-images (with-coordinates layout images)
-		    output-dimensions (sprite-dimensions layout positioned-images) 
-		    output-image      (BufferedImage. (output-dimensions 0) (output-dimensions 1) BufferedImage/TYPE_INT_ARGB)
-				graphics          (.createGraphics output-image)]
-		(doseq [image positioned-images]
-			(.drawImage graphics (:buffered-image image) ((:coordinates image) 0) ((:coordinates image) 1) nil))
-		(ImageIO/write output-image "png" (io/file-str output))
-		positioned-images))
-		
+    "Given the images and a layout type, create a sprite png at the output location"
+    [images layout-type output]
+    (let [layout                        (layout-type layouts)
+            positioned-images (with-coordinates layout images)
+            output-dimensions (sprite-dimensions layout positioned-images) 
+            output-image      (BufferedImage. (output-dimensions 0) (output-dimensions 1) BufferedImage/TYPE_INT_ARGB)
+                graphics          (.createGraphics output-image)]
+        (doseq [image positioned-images]
+            (.drawImage graphics (:buffered-image image) ((:coordinates image) 0) ((:coordinates image) 1) nil))
+        (ImageIO/write output-image "png" (io/file-str output))
+        positioned-images))
+        
 
 (defn image->class-name
-	[image]
-	(.replaceAll (:path image) (java.io.File/separator) "_"))
+    [image]
+    (.replaceAll
+      (.replaceAll (:path image) (java.io.File/separator) "_")
+      "(?i).png$"
+      ""))
 
 (defprotocol CssWriter
-  (write-css-selector [c image]))
+  (write-css-selector [c writer image]))
 
-(deftype Verbose [writer]
+(deftype Writer [format]
   :as this
   CssWriter
-  (write-css-selector [image]
-  	(let [class-name (str "." (image->class-name image))] 
-		(.println writer (str class-name " {"))
-		(.println writer (str "  width: " ((:dimensions image) 0) "px;"))
-		(.println writer (str "  height: " ((:dimensions image) 1) "px;"))
-		(.println writer (str "  background-position: "  ((:coordinates image) 0) "px " ((:coordinates image) 1) "px;"))
-		(.println writer "}"))))
-		
-(def outputs {:verbose Verbose})
+  (write-css-selector [writer image]
+    (let [class-name (str "." (image->class-name image))
+          dim (:dimensions image)
+          coord (:coordinates image)
+          new-line (if (= format :verbose) "\n" "")] 
+      (.println writer (str class-name " {" new-line
+                            " width: " (dim 0) "px;" new-line
+                            " height: " (dim 1) "px;" new-line
+                            " background-position: " (coord 0) "px " (coord 1) "px;" new-line
+                            "}")))))
+        
+(def outputs {:verbose (Writer :verbose) :compact (Writer :compact)})
 
 (defn write-css
-  ([images]
-  	(write-css images :vertical))
-  ([images layout-type]
-  	(write-css images layout-type "sprite.css"))
-  ([images layout-type output]
-  	(write-css images layout-type output :verbose))
-	([images layout-type output output-type]
-	(with-open [writer (io/writer (io/file-str output))]
-			(.println writer (str "/* CSS Sprite File Generated by CSS-SPRITE.clj on " (java.util.Date.) " ...*/\n"))
-			(let [css-writer ((output-type outputs) writer)]
-				(count (for [image (with-coordinates (layout-type layouts) images)]
-				(write-css-selector css-writer image)))))))
-				
+  [images layout-type output output-type]
+    (with-open [writer (io/writer (io/file-str output))]
+      (.println writer (str "/* CSS Sprite File Generated by css-spriter on " (java.util.Date.) " ...*/\n" ))
+      (let [css-writer (output-type outputs)]
+        (println (str "Generated sprite with " 
+          (for [image (with-coordinates (layout-type layouts) images)] (write-css-selector css-writer writer image))  
+          " images")))))
+                
 (defn gen-sprite
-	[images-dir & options]
-	(let [defaults {:png "sprite.png" 
-	                :css "sprite.css"
-	                :layout :vertical}
-				opts (apply assoc defaults (or options {}))]
-		(write-css
-			(combine-images (get-images images-dir) (:layout opts) (:png opts))
-			(:layout opts)
-			(:css opts))))
-			
-			
-			
-			
+    [images-dir & options]
+    (let [defaults {:png "sprite.png" 
+                    :css "sprite.css"
+                    :layout :vertical
+                    :output :compact}
+                opts (apply assoc defaults (or options {}))]
+      (write-css
+          (combine-images (get-images images-dir) (:layout opts) (:png opts))
+          (:layout opts)
+          (:css opts)
+          (:output opts))))
