@@ -1,23 +1,28 @@
-### css-spriter
-===========
+# css-spriter
 
-Concat image files into single sprite and generate background-image css.
+Concat image files into single sprite and generate background-image css with Clojure.
 
-## Installation
+### Installation
 
-1. Install leiningen (http://github.com/technomancy/leiningen)
-2. lein uberjar
+(requires leiningen (http://github.com/technomancy/leiningen)
 
-## Usage
+    lein uberjar
 
-java -jar css-spriter-standalone.jar [dir] [options]
+### Usage
 
-Options
-* :layout (:vertical or :horizontal)
-* :png [location of output sprite png]
-* :css [location of output sprite css]
-* :output (:compact or :verbose css output)
+    java -jar css-spriter-standalone.jar [dir] [options]
 
-## License
+#### Options
+
+    :layout [:vertical :horizontal] - how the sprite's images are arranged
+    :png [dest file path] - destination of generated png
+    :css [dest file path] - destination of generated css
+    :output [:compact :verbose] - format of css
+
+### Limitations
+
+Only png files are supported.
+
+### License
 
 Eclipse Public License 1.0
