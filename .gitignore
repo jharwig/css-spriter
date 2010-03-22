@@ -3,6 +3,8 @@ pom.xml
 lib
 classes
 bin
+sprite.css
+sprite.png
 .circumspec
 .classpath
 .project

@@ -1,5 +1,5 @@
-(ns css-spriter.core-test
-  (:use [css-spriter.core] :reload-all)
+(ns spriter.core-test
+  (:use [spriter.core] :reload-all)
   (:use [circumspec]))
 
 (def tango-dir "test/resources/tango-icon-theme")
