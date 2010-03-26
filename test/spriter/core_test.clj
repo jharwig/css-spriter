@@ -14,5 +14,5 @@
 		(should (= (count coord-images) (count images)))))
 			
 (testing "gen sprite"
-	(gen-sprite tango-dir :png "~/Desktop/sprite.png" :css "~/Desktop/sprite.css"))
+	(gen-sprite tango-dir :layout :vertical :png "~/Desktop/sprite.png" :css "~/Desktop/sprite.css"))
 	
