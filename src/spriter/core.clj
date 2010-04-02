@@ -1,117 +1,60 @@
 (ns spriter.core
   (:gen-class)
-  (:require [clojure.contrib.seq-utils :as seq-utils]
-            [clojure.contrib.duck-streams :as io])  
-  (:import (java.io File 
-                    FilenameFilter)
+  (:use     (spriter util layout writer))
+  (:require [clojure.contrib.duck-streams :as io])
+  (:import (java.io       File
+                          FilenameFilter)
            (javax.imageio ImageIO)
-           (java.awt      Color 
+           (java.awt      Color
                           image.BufferedImage)))
 
-(defn file-str
-  "Concatenates args as strings and returns a java.io.File.  Replaces 
-  ~ at the start of the path with the user.home system property."
-  [& args]
-  (let [#^String s (apply str args)        
-        s (if (.startsWith s "~")
-            (str (System/getProperty "user.home")
-                 File/separator (subs s 1))
-            s)]
-    (File. s)))
-
-
-(defprotocol Layout
-  (sprite-dimensions [l images])
-  (with-coordinates [l images]))
-
-(deftype Simple [direction]
-  :as this
-  Layout
-  (sprite-dimensions [i]
-    (let [vertical (= direction :vertical)
-          images (with-coordinates this i)
-          x-dimension (apply max (map #((:dimensions %1) (if vertical 0 1)) images))
-          y-dimension (+ ((:coordinates (last images)) (if vertical 1 0)) ((:dimensions (last images)) (if vertical 1 0)))
-          dimensions [x-dimension y-dimension]]        
-        (if vertical dimensions (vec (reverse dimensions)))))
-  (with-coordinates [images]
-    (if (contains? (first images) :coordinates)
-      images
-      (let [vertical (= direction :vertical)
-            direction-positions (map #((:dimensions %1) (if vertical 1 0)) images)
-            opposite-positions (conj direction-positions 0)]
-        (for [[i image] (seq-utils/indexed images)]
-          (let [coord [0 (reduce + (take (inc i) opposite-positions))]
-                coord (if vertical coord (vec (reverse coord)))]
-            (merge image {:coordinates coord})))))))
-
-(def layouts {:vertical (Simple :vertical) :horizontal (Simple :horizontal)})
-    
-(defn get-images 
+(defn get-images
   "Given a directory, return a map of all png images with a buffered image and dimensions"
   [dir]
   (let [d (file-str dir)]
     (when (.exists d)
-      (map 
+      (map
         (fn [file]
           (let [bi (ImageIO/read file)]
             {:buffered-image bi :path (.replaceAll (.getPath file) dir "") :dimensions [(.getWidth bi) (.getHeight bi)]}))
-        (filter 
-          #(re-matches #"(?i).*\.png$" (.getName %1)) 
+        (filter
+          #(re-matches #"(?i).*\.png$" (.getName %1))
           (file-seq d))))))
-                    
+
 (defn combine-images
-    "Given the images and a layout type, create a sprite png at the output location"
-    [images layout-type output]
-    (let [layout              (layout-type layouts)
-            positioned-images (with-coordinates layout images)
-            output-dimensions (sprite-dimensions layout positioned-images) 
-            output-image      (BufferedImage. (output-dimensions 0) (output-dimensions 1) BufferedImage/TYPE_INT_ARGB)
-                graphics          (.createGraphics output-image)]
-        (doseq [image positioned-images]
-            (.drawImage graphics (:buffered-image image) ((:coordinates image) 0) ((:coordinates image) 1) nil))
-        (ImageIO/write output-image "png" (file-str output))
-        positioned-images))
-        
-
-(defn image->class-name
-    [image]
-    (.replaceAll
-      (.replaceAll (:path image) "(\\\\|/)" "_")
-      "(?i).png$"
-      ""))
-
-(defprotocol CssWriter
-  (write-css-selector [c writer image]))
-
-(deftype Writer [format]
-  :as this
-  CssWriter
-  (write-css-selector [writer image]
-    (let [class-name (str "." (image->class-name image))
-          dim (:dimensions image)
-          coord (:coordinates image)
-          new-line (if (= format :verbose) "\n" "")] 
-      (.println writer (str class-name " {" new-line
-                            " width: " (dim 0) "px;" new-line
-                            " height: " (dim 1) "px;" new-line
-                            " background-position: " (* (coord 0) -1) "px " (* (coord 1) -1) "px;" new-line
-                            "}")))))
-        
-(def outputs {:verbose (Writer :verbose) :compact (Writer :compact)})
+  "Given the images and a layout type, create a sprite png at the output location"
+  [images layout-type output]
+  (let [layout              (layout-type layouts)
+          positioned-images (with-coordinates layout images)
+          output-dimensions (sprite-dimensions layout positioned-images)
+          output-image      (BufferedImage. (output-dimensions 0) (output-dimensions 1) BufferedImage/TYPE_INT_ARGB)
+              graphics          (.createGraphics output-image)]
+      (doseq [image positioned-images]
+          (.drawImage graphics (:buffered-image image) ((:coordinates image) 0) ((:coordinates image) 1) nil))
+      (ImageIO/write output-image "png" (file-str output))
+      positioned-images))
 
 (defn write-css
+  "Generate a CSS file given the image coordinates and layout type"
   [images layout-type output output-type]
-    (with-open [writer (io/writer (file-str output))]
-      (.println writer (str "/* CSS Sprite File Generated by css-spriter on " (java.util.Date.) " ...*/\n" ))
-      (let [css-writer (output-type outputs)]
-        (println (str "Generated sprite PNG with " 
-          (count (for [image (with-coordinates (layout-type layouts) images)] (write-css-selector css-writer writer image)))  
-          " images")))))
-                
+  (with-open [writer (io/writer (file-str output))]
+    (.println writer (str "/* CSS Sprite File Generated by css-spriter on " (java.util.Date.) " ...*/\n" ))
+    (let [css-writer (output-type outputs)]
+      (println (str "Generated sprite PNG with "
+        (count (for [image (with-coordinates (layout-type layouts) images)] (write-css-selector css-writer writer image)))  
+        " images")))))
+
+
 (defn gen-sprite
+    "Generate a PNG and CSS file for the directory of images
+    
+    Options
+     :png - the output graphic file
+     :css - the output css file
+     :layout - format of the graphic :vertical or :horizontal
+     :output - format of the css :verbose or :compact"
     [images-dir & options]
-    (let [defaults {:png "sprite.png" 
+    (let [defaults {:png "sprite.png"
                     :css "sprite.css"
                     :layout :vertical
                     :output :compact}
@@ -121,10 +64,6 @@
           (:layout opts)
           (:css opts)
           (:output opts))))
-
-(defn str->keyword
-  [str]
-  (keyword (.replaceAll str "^:" "")))
 
 (defn -main [& args]
   (let [args (map #(if (.startsWith %1 ":") (str->keyword %1) %1) args)]
