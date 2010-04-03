@@ -1,4 +1,5 @@
-(ns spriter.writer)
+(ns spriter.writer
+  (:use spriter.util))
 
 (defn image->class-name
     "Convert the image path to a valid CSS class name"
@@ -16,18 +17,14 @@
   CssWriter
   (write-css-selector [writer image]
     (let [class-name (str "." (image->class-name image))
-          dim (:dimensions image)
-          coord (:coordinates image)
-          new-line (if (= format :verbose) "\n" "")
-          ;TODO refactor
-          x (* (coord 0) -1)
-          x (if (= x 0) 0 (str x "px"))
-          y (* (coord 1) -1)
-          y (if (= y 0) 0 (str y "px"))]
-      (.println writer (str class-name " {" new-line
-                            " width: " (dim 0) "px;" new-line
-                            " height: " (dim 1) "px;" new-line
-                            " background-position: " x " " y ";" new-line
+          nl (if (= format :verbose) "\n" "")
+          [css-width css-height] (map num->css-str (:dimensions image))
+          negate-and-cssify (comp num->css-str -)
+          [css-x css-y] (map negate-and-cssify (:coordinates image))]
+      (.println writer (str class-name " {" nl
+                            " width: " css-width ";" nl
+                            " height: " css-height ";" nl
+                            " background-position: " css-x " " css-y ";" nl
                             "}")))))
 
 (def outputs {:verbose (Writer :verbose) :compact (Writer :compact)})

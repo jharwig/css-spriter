@@ -1,8 +1,9 @@
 (ns spriter.core-test
-  (:use helper)
-  (:use [spriter.core] :reload-all)
-  (:use [circumspec])
+  (:use spriter.core)
+  (:use circumspec)
   (:import java.io.File))
+
+(def tango-dir "test/resources/tango-icon-theme")
 
 (testing "get images"
 	(should (> (count (get-images tango-dir)) 0)))

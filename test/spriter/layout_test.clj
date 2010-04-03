@@ -1,7 +1,8 @@
 (ns spriter.layout-test
-  (:use helper)
-  (:use (spriter core util layout))
-  (:use [circumspec]))
+  (:use (spriter core layout))
+  (:use circumspec))
+
+(def tango-dir "test/resources/tango-icon-theme")
 
 (testing "vertical layout"
 	(let [images (get-images tango-dir)

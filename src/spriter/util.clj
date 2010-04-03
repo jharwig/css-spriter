@@ -16,3 +16,7 @@
   "Convert a string with an optional ':' into a keyword"
   [str]
   (keyword (.replaceAll str "^:" "")))
+
+(defn num->css-str
+  ([num] (num->css-str num "px"))
+  ([num unit] (apply str (if (zero? num) [0] [num unit]))))
