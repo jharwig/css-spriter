@@ -19,4 +19,4 @@
 
 (defn num->css-str
   ([num] (num->css-str num "px"))
-  ([num unit] (apply str (if (zero? num) [0] [num unit]))))
+  ([num unit] (str num (when-not (zero? num) unit))))

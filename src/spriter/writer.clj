@@ -13,9 +13,8 @@
   (write-css-selector [c writer image]))
 
 (deftype Writer [format]
-  :as this
   CssWriter
-  (write-css-selector [writer image]
+  (write-css-selector [_ writer image]
     (let [class-name (str "." (image->class-name image))
           nl (if (= format :verbose) "\n" "")
           [css-width css-height] (map num->css-str (:dimensions image))
@@ -27,4 +26,4 @@
                             " background-position: " css-x " " css-y ";" nl
                             "}")))))
 
-(def outputs {:verbose (Writer :verbose) :compact (Writer :compact)})
+(def outputs {:verbose (new Writer :verbose) :compact (new Writer :compact)})

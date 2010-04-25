@@ -6,16 +6,15 @@
   (with-coordinates [l images]))
 
 (deftype Simple [direction]
-  :as this
   Layout
-  (sprite-dimensions [i]
+  (sprite-dimensions [this, i]
     (let [vertical (= direction :vertical)
           images (with-coordinates this i)
           x-dimension (apply max (map #((:dimensions %1) (if vertical 0 1)) images))
           y-dimension (+ ((:coordinates (last images)) (if vertical 1 0)) ((:dimensions (last images)) (if vertical 1 0)))
           dimensions [x-dimension y-dimension]]
         (if vertical dimensions (vec (reverse dimensions)))))
-  (with-coordinates [images]
+  (with-coordinates [_ images]
     (if (contains? (first images) :coordinates)
       images
       (let [vertical (= direction :vertical)
@@ -26,4 +25,4 @@
                 coord (if vertical coord (vec (reverse coord)))]
             (merge image {:coordinates coord})))))))
 
-(def layouts {:vertical (Simple :vertical) :horizontal (Simple :horizontal)})
+(def layouts {:vertical (new Simple :vertical) :horizontal (new Simple :horizontal)})

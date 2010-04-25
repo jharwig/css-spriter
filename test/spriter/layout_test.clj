@@ -11,5 +11,5 @@
 		(should (= (count coord-images) (count images)))))
 
 (testing "available layouts"
-  (should (= (:vertical layouts) (Simple :vertical)))
-  (should (= (:horizontal layouts) (Simple :horizontal))))
+  (should (not (nil? (:vertical layouts))))
+  (should (not (nil? (:horizontal layouts)))))
