@@ -1,6 +1,8 @@
 # css-spriter
 
-Concat image files into single sprite and generate background-image css with Clojure.
+Improve page performance by combining image resources into a single browser request using css sprites. This tool, written in Clojure, will recursively concatenate all PNG images into a single sprite image, and generate the appropriate CSS styles to display those images correctly. Css-spriter allows either vertical or horizontal image layouts.
+
+A List Apart has more information on [css sprites](http://www.alistapart.com/articles/sprites).
 
 ### Get Started
 
